@@ -55,7 +55,7 @@ function renderRows(rows){
       `<td>${escapeHTML(r._timestamp)}</td>`+
       `<td>${escapeHTML(form)}</td>`+   <!-- NEW column -->
       `<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
-      `<td>Line 13: <strong>${escapeHTML(r.line13||r.l12||'')}</strong></td>`+
+      `<td>Total Claim Amount: <strong>${escapeHTML(r.line13||r.l12||'')}</strong></td>`+
       `<td>`+
         (r.multiple_employers?'<div>Multiple employers</div>':'')+
         (r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
