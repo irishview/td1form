@@ -51,6 +51,7 @@ function writeAll(rows) {
 }
 
 // Receive submissions
+// Receive submissions
 app.post('/submit', (req, res) => {
   try {
     const ts = new Date().toISOString();
@@ -95,6 +96,7 @@ app.post('/submit', (req, res) => {
     res.status(500).json({ ok: false, error: 'Server error' });
   }
 });
+
 
 
 // Simple admin-key gate
