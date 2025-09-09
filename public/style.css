@@ -1,7 +1,7 @@
 :root { --w: 980px; --gap: 10px; font-size: 16px; }
 * { box-sizing: border-box; }
 body { font-family: system-ui, Arial, sans-serif; color: #111; margin: 0; background: #fafafa; }
-header { background: #0d4c92; color: #fff; padding: 16px; }
+header { background: #0d4c92; color: #fff; padding: 16px; text-align: center; }
 main { max-width: var(--w); margin: 20px auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
 h1, h2, h3 { margin: 0 0 12px; }
 .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
