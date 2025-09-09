@@ -3,16 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TD1 2025 – Personal Tax Credits Return (Fillable)</title>
+  <title>TD1 & TD1NB 2025 — Fillable</title>
   <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* Minimal tab styles (scoped) */
+    .tabs { max-width: var(--w); margin: 0 auto; }
+    .tablist { display:flex; gap:10px; padding:12px 20px 0; }
+    .tablist button { background:#eaeaea; }
+    .tablist button[aria-selected="true"] { background:#0d4c92; color:#fff; }
+    .tabpanel { display:none; }
+    .tabpanel.active { display:block; }
+  </style>
 </head>
 <body>
   <header>
-    <h1>2025 Personal Tax Credits Return (TD1) — Fillable</h1>
-    <div class="small">Mirrors CRA TD1-2025 fields. For guidance, see the official CRA instructions.</div>
+    <h1>2025 Personal Tax Credits — Fillable</h1>
+    <div class="small">Mirrors CRA TD1-2025 (Federal) and TD1NB-2025 (New Brunswick) fields. For guidance, see the official instructions.</div>
   </header>
 
-  <main>
+  <div class="tabs" role="tablist" aria-label="Tax Forms">
+    <div class="tablist">
+      <button id="tab-federal-btn" role="tab" aria-controls="tab-federal" aria-selected="true" class="button secondary">Federal TD1</button>
+      <button id="tab-nb-btn" role="tab" aria-controls="tab-nb" aria-selected="false" class="button secondary">New Brunswick TD1NB</button>
+    </div>
+  </div>
+
+  <!-- FEDERAL TD1 TAB -->
+  <main id="tab-federal" class="tabpanel active" role="tabpanel" aria-labelledby="tab-federal-btn">
+    <!-- ===== Your Federal TD1 (merged, with a few ID tweaks for uniqueness) ===== -->
     <form id="td1form">
       <!-- Personal information -->
       <section class="grid">
@@ -59,86 +77,79 @@
         <div class="field">
           <label for="line1">1. Basic personal amount</label>
           <input id="line1" name="line1" type="number" step="0.01" value="16129" />
-          <div class="hint">Every resident of Canada can enter a basic personal amount of $16,129. However, if your net income from all sources will be greater than $177,882 and you enter $16,129, you may have an amount owing on your income tax and benefit return at the end of the tax year. If your income from all sources will be greater than $177,882 you have the option to calculate a partial claim. To do so, fill in the appropriate section of Form TD1-WS, Worksheet for the 2025 Personal Tax Credits Return, and enter the calculated amount here.</div>
+          <div class="hint">Every resident of Canada can enter a basic personal amount of $16,129…</div>
         </div>
 
         <div class="field">
           <label for="line2">2. Canada caregiver amount for infirm children under 18</label>
           <input id="line2" name="line2" type="number" step="0.01" />
-          <div class="hint">Only one parent may claim $2,687 for each infirm child born in 2008 or later who lives with both parents throughout the year. If the child does not live with both parents throughout the year, the parent who has the right to claim the "Amount for an eligible dependant" on line 8 may also claim the Canada caregiver amount for the child.</div>
+          <div class="hint">Only one parent may claim $2,687…</div>
         </div>
 
         <div class="field">
           <label for="line3">3. Age amount</label>
           <input id="line3" name="line3" type="number" step="0.01" />
-          <div class="hint">If you will be 65 or older on December 31, 2025, and your net income for the year from all sources will be $45,522 or less, enter $9,028. You may enter a partial amount if your net income for the year will be between $45,522 and $105,709. To calculate a partial amount, fill out the line 3 section of Form TD1-WS.</div>
+          <div class="hint">If you will be 65 or older…</div>
         </div>
 
         <div class="field">
           <label for="line4">4. Pension income amount</label>
           <input id="line4" name="line4" type="number" step="0.01" />
-          <div class="hint">If you will receive regular pension payments from a pension plan or fund (not including Canada Pension Plan, Quebec Pension Plan, old age security, or guaranteed income supplement payments), enter whichever is less: $2,000 or your estimated annual pension income.</div>
+          <div class="hint">If you will receive regular pension payments…</div>
         </div>
 
         <div class="field">
           <label for="line5">5. Tuition (full-time and part-time)</label>
           <input id="line5" name="line5" type="number" step="0.01" />
-          <div class="hint">Fill in this section if you are a student at a university or college, or an educational institution certified by Employment and Social Development Canada, and you will pay more than $100 per institution in tuition fees. Enter the total tuition fees that you will pay if you are a full-time or part-time student.</div>
+          <div class="hint">Fill in this section if you are a student…</div>
         </div>
 
         <div class="field">
           <label for="line6">6. Disability amount</label>
           <input id="line6" name="line6" type="number" step="0.01" />
-          <div class="hint">If you will claim the disability amount on your income tax and benefit return by using Form T2201, Disability Tax Credit Certificate, enter $10,138.</div>
+          <div class="hint">If you will claim the disability amount…</div>
         </div>
 
         <div class="field">
           <label for="line7">7. Spouse or common-law partner amount</label>
           <input id="line7" name="line7" type="number" step="0.01" />
-          <div class="hint">Enter the difference between the amount on line 1 (line 1 plus $2,687 if your spouse or common-law partner is infirm) and your spouse's or common-law partner's estimated net income for the year if two of the following conditions apply:
-•You are supporting your spouse or common-law partner who lives with you
-•Your spouse or common-law partner's net income for the year will be less than the amount on line 1 (line 1 plus $2,687 if your spouse or common-law partner is infirm)
-In all cases, go to line 9 if your spouse or common-law partner is infirm and has a net income for the year of $28,798 or less.</div>
+          <div class="hint">Enter the difference between the amount on line 1…</div>
         </div>
 
         <div class="field">
           <label for="line8">8. Amount for an eligible dependant</label>
           <input id="line8" name="line8" type="number" step="0.01" />
-	 <div class="hint">Enter the difference between the amount on line 1 (line 1 plus $2,687 if your eligible dependant is infirm) and your eligible dependant's estimated net income for the year if all of the following conditions apply:
-•You do not have a spouse or common-law partner, or you have a spouse or common-law partner who does not live with you and who you are not supporting or being supported by
-•You are supporting the dependant who is related to you and lives with you
-•The dependant's net income for the year will be less than the amount on line 1 (line 1 plus $2,687 if your dependant is infirm and you cannot claim the Canada caregiver amount for infirm children under 18 years of age for this dependant)
-In all cases, go to line 9 if your dependant is 18 years or older, infirm, and has a net income for the year of $28,798 or less.</div>
+          <div class="hint">Enter the difference between the amount on line 1…</div>
         </div>
 
         <div class="field">
           <label for="line9">9. Canada caregiver amount for eligible dependant or spouse/CLP</label>
           <input id="line9" name="line9" type="number" step="0.01" />
-	<div class="hint">Fill out this section if, at any time in the year, you support an infirm eligible dependant (aged 18 or older) or an infirm spouse or common-law partner whose net income for the year will be $28,798 or less. To calculate the amount you may enter here, fill out the line 9 section of Form TD1-WS.</div>
+          <div class="hint">Fill out this section if…</div>
         </div>
 
         <div class="field">
           <label for="line10">10. Canada caregiver amount for dependant(s) age 18 or older</label>
           <input id="line10" name="line10" type="number" step="0.01" />
-          <div class="hint">If, at any time in the year, you support an infirm dependant age 18 or older (other than the spouse or common-law partner or eligible dependant you claimed an amount for on line 9 or could have claimed an amount for if their net income were under $18,816) whose net income for the year will be $20,197 or less, enter $8,601. You may enter a partial amount if their net income for the year will be between $20,197 and $28,798. To calculate a partial amount, fill out the line 10 section of Form TD1-WS. This worksheet may also be used to calculate your part of the amount if you are sharing it with another caregiver who supports the same dependant. You may claim this amount for more than one infirm dependant age 18 or older.</div>
+          <div class="hint">If, at any time in the year, you support an infirm dependant…</div>
         </div>
 
         <div class="field">
           <label for="line11">11. Amounts transferred from your spouse or common-law partner</label>
           <input id="line11" name="line11" type="number" step="0.01" />
- 	<div class="hint">If your spouse or common-law partner will not use all of their age amount, pension income amount, tuition amount, or disability amount on their income tax and benefit return, enter the unused amount.</div>
+          <div class="hint">If your spouse or common-law partner will not use all of their…</div>
         </div>
 
         <div class="field">
           <label for="line12">12. Amounts transferred from a dependant</label>
           <input id="line12" name="line12" type="number" step="0.01" />
-	<div class="hint">If your dependant will not use all of their disability amount on their income tax and benefit return, enter the unused amount. If your or your spouse's or common-law partner's dependent child or grandchild will not use all of their tuition amount on their income tax and benefit return, enter the unused amount.</div>
+          <div class="hint">If your dependant will not use all of their disability amount…</div>
         </div>
 
         <div class="field">
           <label for="line13">13. TOTAL CLAIM AMOUNT (auto)</label>
           <input id="line13" name="line13" type="number" step="0.01" readonly />
-	<div class="hint">Your employer or payer will use this amount to determine the amount of your tax deductions.</div>
+          <div class="hint">Your employer or payer will use this amount to determine your tax deductions.</div>
         </div>
       </section>
 
@@ -150,14 +161,14 @@ In all cases, go to line 9 if your dependant is 18 years or older, infirm, and h
 
         <div class="note">
           <div class="checkbox">
-            <input type="checkbox" id="multiple_employers" name="multiple_employers" />
-            <label for="multiple_employers">
+            <input type="checkbox" id="f_multiple_employers" name="multiple_employers" />
+            <label for="f_multiple_employers">
               I have more than one employer or payer at the same time and have already claimed credits on another TD1 for 2025. I will enter “0” on line 13 and not fill lines 2–12 on this form.
             </label>
           </div>
           <div class="checkbox">
-            <input type="checkbox" id="total_income_less" name="total_income_less" />
-            <label for="total_income_less">
+            <input type="checkbox" id="f_total_income_less" name="total_income_less" />
+            <label for="f_total_income_less">
               My total income for the year from all employers/payers will be less than my total claim amount on line 13 (request no tax withheld).
             </label>
           </div>
@@ -165,17 +176,12 @@ In all cases, go to line 9 if your dependant is 18 years or older, infirm, and h
 
         <div class="field">
           <label>For non-residents only: Will 90% or more of your world income be included in determining your taxable income earned in Canada in 2025?</label>
-          <div class="radio"><input type="radio" name="nonresident_90" value="yes" /> <span>Yes</span></div>
-          <div class="radio"><input type="radio" name="nonresident_90" value="no" /> <span>No (Enter “0” on line 13 and do not fill lines 2–12.)</span></div>
+          <div class="radio"><input type="radio" id="f_nonres_yes" name="nonresident_90" value="yes" /> <label for="f_nonres_yes">Yes</label></div>
+          <div class="radio"><input type="radio" id="f_nonres_no"  name="nonresident_90" value="no"  /> <label for="f_nonres_no">No (Enter “0” on line 13 and do not fill lines 2–12.)</label></div>
         </div>
 
         <div class="field">
           <label>Deduction for living in a prescribed zone (optional helper)</label>
-<div class="hint">You may claim any of the following amounts if you live in the Northwest Territories, Nunavut, Yukon, or another prescribed northern zone for more than six months in a row beginning or ending in 2025:
-•$11.00 for each day that you live in the prescribed northern zone
-•$22.00 for each day that you live in the prescribed northern zone if, during that time, you live in a dwelling that you maintain, and you are the only person living in that dwelling who is claiming this deduction
-Employees living in a prescribed intermediate zone may claim 50% of the total of the above amounts.</div>
-
           <div class="grid">
             <div class="col-4 field">
               <label>Days in a prescribed northern zone (x $11)</label>
@@ -208,8 +214,8 @@ Employees living in a prescribed intermediate zone may claim 50% of the total of
       <!-- Certification + signature/date -->
       <section>
         <div class="checkbox">
-          <input type="checkbox" id="certify" name="certify" required />
-          <label for="certify"><strong>I certify that the information given on this form is correct and complete.</strong></label>
+          <input type="checkbox" id="f_certify" name="certify" required />
+          <label for="f_certify"><strong>I certify that the information given on this form is correct and complete.</strong></label>
         </div>
 
         <div class="signature">
@@ -236,8 +242,328 @@ Employees living in a prescribed intermediate zone may claim 50% of the total of
     </form>
   </main>
 
-  <footer>TD1 2025 (Unofficial fillable replica). This tool stores submissions locally on your server.</footer>
+  <!-- NB TD1NB TAB -->
+  <main id="tab-nb" class="tabpanel" role="tabpanel" aria-labelledby="tab-nb-btn">
+    <!-- ===== TD1NB (same styling/behavior as before) ===== -->
+    <form id="td1nbform" method="POST" action="/submit" novalidate>
+      <div class="grid">
+        <div class="col-6 field">
+          <label for="nb_last_name">Last name</label>
+          <input id="nb_last_name" name="last_name" type="text" autocomplete="family-name" />
+        </div>
+        <div class="col-6 field">
+          <label for="nb_first_names">First name and initial(s)</label>
+          <input id="nb_first_names" name="first_names" type="text" autocomplete="given-name" />
+        </div>
+        <div class="col-4 field">
+          <label for="nb_dob">Date of birth (YYYY/MM/DD)</label>
+          <input id="nb_dob" name="dob" type="date" />
+        </div>
+        <div class="col-4 field">
+          <label for="nb_employee_number">Employee number</label>
+          <input id="nb_employee_number" name="employee_number" type="text" />
+        </div>
+        <div class="col-12 field">
+          <label for="nb_address">Address</label>
+          <input id="nb_address" name="address" type="text" autocomplete="address-line1" />
+        </div>
+        <div class="col-4 field">
+          <label for="nb_postal_code">Postal code</label>
+          <input id="nb_postal_code" name="postal_code" type="text" autocomplete="postal-code" />
+        </div>
+        <div class="col-8 field">
+          <label for="country_res">For non-residents only — Country of permanent residence</label>
+          <input id="country_res" name="country_res" type="text" />
+        </div>
+        <div class="col-4 field">
+          <label for="sin">Social insurance number</label>
+          <input id="sin" name="sin" type="text" inputmode="numeric" />
+        </div>
+      </div>
 
-  <script src="/td1.js"></script>
+      <hr>
+
+      <div class="grid">
+        <div class="col-9 field">
+          <label for="l1"><strong>1.</strong> Basic personal amount</label>
+          <div class="hint">Default NB amount for 2025.</div>
+        </div>
+        <div class="col-3 field">
+          <label for="l1">Amount</label>
+          <input id="l1" name="l1_basic_personal" type="number" step="0.01" value="13396" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l2"><strong>2.</strong> Age amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l2">Amount</label>
+          <input id="l2" name="l2_age_amount" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l3"><strong>3.</strong> Pension income amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l3">Amount</label>
+          <input id="l3" name="l3_pension_amount" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l4"><strong>4.</strong> Tuition amounts (full-time and part-time)</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l4">Amount</label>
+          <input id="l4" name="l4_tuition" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l5"><strong>5.</strong> Disability amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l5">Amount</label>
+          <input id="l5" name="l5_disability" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l6"><strong>6.</strong> Spouse or common-law partner amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l6">Amount</label>
+          <input id="l6" name="l6_spouse_amount" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l7"><strong>7.</strong> Amount for an eligible dependant</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l7">Amount</label>
+          <input id="l7" name="l7_eligible_dependant" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l8"><strong>8.</strong> Caregiver amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l8">Amount</label>
+          <input id="l8" name="l8_caregiver" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l9"><strong>9.</strong> Amount for infirm dependants age 18 or older</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l9">Amount</label>
+          <input id="l9" name="l9_infirm_dependants" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l10"><strong>10.</strong> Amounts transferred from your spouse or common-law partner</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l10">Amount</label>
+          <input id="l10" name="l10_transfer_spouse" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l11"><strong>11.</strong> Amounts transferred from a dependant</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l11">Amount</label>
+          <input id="l11" name="l11_transfer_dependant" type="number" step="0.01" />
+        </div>
+
+        <div class="col-9 field">
+          <label for="l12"><strong>12.</strong> TOTAL CLAIM AMOUNT — Add lines 1 to 11</label>
+          <div class="hint">Used by employer to determine provincial tax deductions.</div>
+        </div>
+        <div class="col-3 field">
+          <label for="l12">Total</label>
+          <input id="l12" name="l12_total" type="number" step="0.01" readonly />
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="note">
+        <strong>Notes (Page 2):</strong>
+        <div class="checkbox">
+          <input id="multi_employers" name="multi_employers" type="checkbox" />
+          <label for="multi_employers">
+            I have more than one employer or payer at the same time in 2025 and have already claimed credits elsewhere. 
+            <em>Enter “0” on line 12 and do not fill lines 2–11.</em>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input id="total_less_claim" name="total_less_claim" type="checkbox" />
+          <label for="total_less_claim">
+            My total income for the year from all employers/payers will be less than my total claim amount on line 12.
+          </label>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="field">
+        <div class="checkbox">
+          <input id="certify" name="certify" type="checkbox" required />
+          <label for="certify"><strong>I certify that the information given on this form is correct and complete.</strong></label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-8 field">
+          <label>Signature</label>
+          <div class="signature" aria-label="Signature box">
+            Sign here (or type your name): 
+            <input name="signature_text" type="text" style="width:100%; border:0; outline:0; background:transparent;" />
+          </div>
+        </div>
+        <div class="col-4 field">
+          <label for="signed_date">Date</label>
+          <input id="signed_date" name="signed_date" type="date" />
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-12" style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="secondary" onclick="window.print()">Print</button>
+          <button type="submit" class="primary">Submit NB</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer>TD1 (Federal) & TD1NB (New Brunswick) — 2025</footer>
+
+  <script>
+    // --- Tabs ---
+    const tabFederalBtn = document.getElementById('tab-federal-btn');
+    const tabNBBtn = document.getElementById('tab-nb-btn');
+    const panelFederal = document.getElementById('tab-federal');
+    const panelNB = document.getElementById('tab-nb');
+
+    function setTab(which){
+      const isFederal = which === 'federal';
+      tabFederalBtn.setAttribute('aria-selected', isFederal ? 'true' : 'false');
+      tabNBBtn.setAttribute('aria-selected', !isFederal ? 'true' : 'false');
+      panelFederal.classList.toggle('active', isFederal);
+      panelNB.classList.toggle('active', !isFederal);
+      (isFederal ? tabFederalBtn : tabNBBtn).focus();
+    }
+    tabFederalBtn.addEventListener('click', ()=>setTab('federal'));
+    tabNBBtn.addEventListener('click', ()=>setTab('nb'));
+
+    // --- Helpers ---
+    const toNum = (id) => {
+      const el = document.getElementById(id);
+      const v = parseFloat(el && el.value);
+      return isNaN(v) ? 0 : v;
+    };
+
+    // --- Federal TD1 logic ---
+    function recalcFederal(){
+      const disableGroup = (disabled) => {
+        for (let i=2; i<=12; i++){
+          const el = document.getElementById('line'+i);
+          if (el) { el.disabled = disabled; if (disabled) el.value = ''; }
+        }
+      };
+
+      // If multiple employers OR nonresident says "No" -> disable lines 2–12, set 13 to 0
+      const multi = document.getElementById('f_multiple_employers')?.checked;
+      const nonresNo = document.getElementById('f_nonres_no')?.checked;
+
+      if (multi || nonresNo) {
+        disableGroup(true);
+        const l13 = document.getElementById('line13');
+        if (l13) l13.value = 0;
+        return;
+      } else {
+        disableGroup(false);
+      }
+
+      // Sum lines 1–12 into 13
+      let total = 0;
+      for (let i=1; i<=12; i++){
+        total += toNum('line'+i);
+      }
+      const l13 = document.getElementById('line13');
+      if (l13) l13.value = total.toFixed(2);
+    }
+
+    // Northern deduction helper (informational)
+    function recalcNorthern(){
+      const d11 = parseInt(document.getElementById('northern_days_11')?.value || '0', 10);
+      const d22 = parseInt(document.getElementById('northern_days_22')?.value || '0', 10);
+      const isIntermediate = document.getElementById('intermediate_zone')?.checked;
+      let amount = (d11 * 11) + (d22 * 22);
+      if (isIntermediate) amount *= 0.5;
+      const out = document.getElementById('northern_calc');
+      if (out) out.textContent = amount.toFixed(2);
+    }
+
+    // Wire up Federal events
+    document.addEventListener('input', (e) => {
+      if (e.target.closest('#td1form')) {
+        if (['northern_days_11','northern_days_22','intermediate_zone'].includes(e.target.id)) {
+          recalcNorthern();
+        }
+        recalcFederal();
+      }
+    });
+    document.getElementById('f_multiple_employers')?.addEventListener('change', recalcFederal);
+    document.getElementById('f_nonres_yes')?.addEventListener('change', recalcFederal);
+    document.getElementById('f_nonres_no')?.addEventListener('change', recalcFederal);
+    window.addEventListener('DOMContentLoaded', () => {
+      recalcNorthern();
+      recalcFederal();
+      recalcNB();
+    });
+
+    // Require Federal certification
+    document.getElementById('td1form')?.addEventListener('submit', (e) => {
+      const certify = document.getElementById('f_certify');
+      if (certify && !certify.checked) {
+        e.preventDefault();
+        alert('Please certify that the information is correct and complete before submitting the Federal form.');
+      }
+    });
+
+    // --- NB TD1NB logic ---
+    function recalcNB(){
+      const multi = document.getElementById('multi_employers')?.checked;
+      const inputs = ['l2','l3','l4','l5','l6','l7','l8','l9','l10','l11'].map(id => document.getElementById(id));
+
+      if (multi) {
+        inputs.forEach(i => { if (i) { i.value = ''; i.disabled = true; } });
+        const totalEl = document.getElementById('l12');
+        if (totalEl) totalEl.value = 0;
+        return;
+      } else {
+        inputs.forEach(i => { if (i) i.disabled = false; });
+      }
+
+      const total = toNum('l1')
+        + toNum('l2') + toNum('l3') + toNum('l4') + toNum('l5') + toNum('l6')
+        + toNum('l7') + toNum('l8') + toNum('l9') + toNum('l10') + toNum('l11');
+
+      const totalEl = document.getElementById('l12');
+      if (totalEl) totalEl.value = total.toFixed(2);
+    }
+
+    document.addEventListener('input', (e) => {
+      if (e.target.closest('#td1nbform')) recalcNB();
+    });
+
+    // Require NB certification
+    document.getElementById('td1nbform')?.addEventListener('submit', (e) => {
+      const certify = document.getElementById('certify');
+      if (certify && !certify.checked) {
+        e.preventDefault();
+        alert('Please certify that the information is correct and complete before submitting the New Brunswick form.');
+      }
+    });
+  </script>
 </body>
 </html>
