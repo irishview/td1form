@@ -15,7 +15,6 @@
   <main>
 <form id="td1nbform" method="POST" action="/submit">
   <input type="hidden" name="form_type" value="td1nb">
-</form>
 
       <!-- Personal information -->
       <section class="grid">
@@ -228,7 +227,7 @@ benefit return, enter the unused amount.</div>
     // Recalculate line 12
     function recalcNB(){
       const multi = document.getElementById('multi_employers')?.checked;
-      const inputs = ['l2','l3','l4','l5','l6','l7','l8','l9','l10','l11'].map(id => document.getElementById(id));
+      const inputs = ['l2','l3','l4','l5','l6','l7','l8','l9','l10','l11'].map(id =>document.getElementById(id));
 
       if (multi) {
         inputs.forEach(i => { if (i) { i.value = ''; i.disabled = true; } });
