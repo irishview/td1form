@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TD1NB 2025 – New Brunswick Personal Tax Credits Return (Fillable)</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>2025 New Brunswick Personal Tax Credits Return (TD1NB) — Fillable</h1>
+    <div class="small">Mirrors CRA TD1NB-2025 fields. For guidance, see the official instructions.</div>
+  </header>
+
+  <main>
+    <form id="td1nbform" method="POST" action="/submit" novalidate>
+      <div class="grid">
+        <!-- Personal info -->
+        <div class="col-6 field">
+          <label for="last_name">Last name</label>
+          <input id="last_name" name="last_name" type="text" autocomplete="family-name" />
+        </div>
+        <div class="col-6 field">
+          <label for="first_names">First name and initial(s)</label>
+          <input id="first_names" name="first_names" type="text" autocomplete="given-name" />
+        </div>
+        <div class="col-4 field">
+          <label for="dob">Date of birth (YYYY/MM/DD)</label>
+          <input id="dob" name="dob" type="date" />
+        </div>
+        <div class="col-4 field">
+          <label for="employee_number">Employee number</label>
+          <input id="employee_number" name="employee_number" type="text" />
+        </div>
+        <div class="col-12 field">
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" autocomplete="address-line1" />
+        </div>
+        <div class="col-4 field">
+          <label for="postal_code">Postal code</label>
+          <input id="postal_code" name="postal_code" type="text" autocomplete="postal-code" />
+        </div>
+
+        <!-- For non-residents only -->
+        <div class="col-8 field">
+          <label for="country_res">For non-residents only — Country of permanent residence</label>
+          <input id="country_res" name="country_res" type="text" />
+        </div>
+
+        <div class="col-4 field">
+          <label for="sin">Social insurance number</label>
+          <input id="sin" name="sin" type="text" inputmode="numeric" />
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Credits lines 1–11 -->
+      <div class="grid">
+        <!-- Line 1 -->
+        <div class="col-9 field">
+          <label for="l1"><strong>1.</strong> Basic personal amount</label>
+          <div class="hint">Default NB amount for 2025.</div>
+        </div>
+        <div class="col-3 field">
+          <label for="l1">Amount</label>
+          <input id="l1" name="l1_basic_personal" type="number" step="0.01" value="13396" />
+        </div>
+
+        <!-- Line 2 -->
+        <div class="col-9 field">
+          <label for="l2"><strong>2.</strong> Age amount</label>
+          <div class="hint">If 65+ on Dec 31, 2025. See worksheet for partial amounts.</div>
+        </div>
+        <div class="col-3 field">
+          <label for="l2">Amount</label>
+          <input id="l2" name="l2_age_amount" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 3 -->
+        <div class="col-9 field">
+          <label for="l3"><strong>3.</strong> Pension income amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l3">Amount</label>
+          <input id="l3" name="l3_pension_amount" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 4 -->
+        <div class="col-9 field">
+          <label for="l4"><strong>4.</strong> Tuition amounts (full-time and part-time)</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l4">Amount</label>
+          <input id="l4" name="l4_tuition" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 5 -->
+        <div class="col-9 field">
+          <label for="l5"><strong>5.</strong> Disability amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l5">Amount</label>
+          <input id="l5" name="l5_disability" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 6 -->
+        <div class="col-9 field">
+          <label for="l6"><strong>6.</strong> Spouse or common-law partner amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l6">Amount</label>
+          <input id="l6" name="l6_spouse_amount" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 7 -->
+        <div class="col-9 field">
+          <label for="l7"><strong>7.</strong> Amount for an eligible dependant</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l7">Amount</label>
+          <input id="l7" name="l7_eligible_dependant" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 8 -->
+        <div class="col-9 field">
+          <label for="l8"><strong>8.</strong> Caregiver amount</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l8">Amount</label>
+          <input id="l8" name="l8_caregiver" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 9 -->
+        <div class="col-9 field">
+          <label for="l9"><strong>9.</strong> Amount for infirm dependants age 18 or older</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l9">Amount</label>
+          <input id="l9" name="l9_infirm_dependants" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 10 -->
+        <div class="col-9 field">
+          <label for="l10"><strong>10.</strong> Amounts transferred from your spouse or common-law partner</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l10">Amount</label>
+          <input id="l10" name="l10_transfer_spouse" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 11 -->
+        <div class="col-9 field">
+          <label for="l11"><strong>11.</strong> Amounts transferred from a dependant</label>
+        </div>
+        <div class="col-3 field">
+          <label for="l11">Amount</label>
+          <input id="l11" name="l11_transfer_dependant" type="number" step="0.01" />
+        </div>
+
+        <!-- Line 12 TOTAL -->
+        <div class="col-9 field">
+          <label for="l12"><strong>12.</strong> TOTAL CLAIM AMOUNT — Add lines 1 to 11</label>
+          <div class="hint">Used by employer to determine provincial tax deductions.</div>
+        </div>
+        <div class="col-3 field">
+          <label for="l12">Total</label>
+          <input id="l12" name="l12_total" type="number" step="0.01" readonly />
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Page 2 checkboxes / notes -->
+      <div class="note">
+        <strong>Notes (Page 2):</strong>
+        <div class="checkbox">
+          <input id="multi_employers" name="multi_employers" type="checkbox" />
+          <label for="multi_employers">
+            I have more than one employer or payer at the same time in 2025 and have already claimed credits elsewhere. 
+            <em>Enter “0” on line 12 and do not fill lines 2–11.</em>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input id="total_less_claim" name="total_less_claim" type="checkbox" />
+          <label for="total_less_claim">
+            My total income for the year from all employers/payers will be less than my total claim amount on line 12.
+          </label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Certification -->
+      <div class="field">
+        <div class="checkbox">
+          <input id="certify" name="certify" type="checkbox" required />
+          <label for="certify"><strong>I certify that the information given on this form is correct and complete.</strong></label>
+        </div>
+      </div>
+
+      <!-- Signature & date -->
+      <div class="grid">
+        <div class="col-8 field">
+          <label>Signature</label>
+          <div class="signature" aria-label="Signature box">
+            Sign here (or type your name): 
+            <input name="signature_text" type="text" style="width:100%; border:0; outline:0; background:transparent;" />
+          </div>
+        </div>
+        <div class="col-4 field">
+          <label for="signed_date">Date</label>
+          <input id="signed_date" name="signed_date" type="date" />
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-12" style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="secondary" onclick="window.print()">Print</button>
+          <button type="submit" class="primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer>TD1NB E (25)</footer>
+
+  <script>
+    function toNum(id){
+      const el = document.getElementById(id);
+      const v = parseFloat(el && el.value);
+      return isNaN(v) ? 0 : v;
+    }
+
+    function recalc(){
+      // If “more than one employer” is checked, force total to 0 and disable lines 2–11.
+      const multi = document.getElementById('multi_employers').checked;
+      const l1 = toNum('l1');
+      const inputs = ['l2','l3','l4','l5','l6','l7','l8','l9','l10','l11'].map(id => document.getElementById(id));
+
+      if (multi) {
+        inputs.forEach(i => { if (i) { i.value = ''; i.disabled = true; } });
+        document.getElementById('l12').value = 0;
+        return;
+      } else {
+        inputs.forEach(i => { if (i) i.disabled = false; });
+      }
+
+      const total = l1
+        + toNum('l2') + toNum('l3') + toNum('l4') + toNum('l5') + toNum('l6')
+        + toNum('l7') + toNum('l8') + toNum('l9') + toNum('l10') + toNum('l11');
+
+      document.getElementById('l12').value = total.toFixed(2);
+    }
+
+    // Recalculate on input changes
+    document.addEventListener('input', (e) => {
+      if (e.target.closest('#td1nbform')) recalc();
+    });
+    document.getElementById('multi_employers').addEventListener('change', recalc);
+    window.addEventListener('DOMContentLoaded', recalc);
+
+    // Require certification before submit
+    document.getElementById('td1nbform').addEventListener('submit', (e) => {
+      const certify = document.getElementById('certify');
+      if (!certify.checked) {
+        e.preventDefault();
+        alert('Please certify that the information is correct and complete before submitting.');
+      }
+    });
+  </script>
+</body>
+</html>
