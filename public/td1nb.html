@@ -259,5 +259,32 @@ benefit return, enter the unused amount.</div>
       }
     });
   </script>
+<script>
+(function () {
+  const form = document.getElementById('td1nbform');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // keep user on the page
+
+    // Send as application/x-www-form-urlencoded (matches your server's parser)
+    const fd = new FormData(form);
+    const body = new URLSearchParams();
+    for (const [k, v] of fd.entries()) body.append(k, v);
+
+    try {
+      const res = await fetch(form.action || '/submit', { method: 'POST', body });
+      const json = await res.json();
+      if (!res.ok || !json.ok) throw new Error(json?.error || 'Submit failed');
+
+      alert('Submitted TD1NB successfully ✅');   // same style popup as TD1
+      form.reset();
+    } catch (err) {
+      alert('Error: ' + (err?.message || 'Submit failed'));
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
