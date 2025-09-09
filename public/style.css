@@ -16,6 +16,7 @@ width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 8px; backgroun
 }
 .field { margin-bottom: 12px; }
 .small { font-size: .92rem; color: #333; }
+header .small { color: #fff; }
 .hint { color: #555; font-size: .9rem; }
 .note { background: #f4f7ff; border: 1px solid #d8e3ff; padding: 10px; border-radius: 8px; }
 hr { border: 0; height: 1px; background: #eee; margin: 18px 0; }
@@ -27,4 +28,3 @@ button.secondary { background: #eaeaea; }
 .signature { border: 1px dashed #bbb; padding: 10px; border-radius: 8px; background: #fcfcfc; }
 footer { text-align: center; color: #666; padding: 20px; }
 @media print { body { background: #fff; } main { box-shadow: none; } button { display: none; } }
-header h2 { color: #fff !important; }
