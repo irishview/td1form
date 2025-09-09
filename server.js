@@ -54,9 +54,15 @@ function writeAll(rows) {
 app.post('/submit', (req, res) => {
   try {
     const ts = new Date().toISOString();
+    const { form_type } = req.body || {};
+
+    if (!form_type) {
+      return res.status(400).json({ ok: false, error: 'Missing form_type' });
+    }
+
     const payload = { ...req.body, _timestamp: ts };
 
-    // Server-side validations
+    // Shared validations
     if (payload.certify !== 'on') {
       return res.status(400).json({ ok: false, error: 'Certification checkbox must be checked.' });
     }
@@ -67,16 +73,29 @@ app.post('/submit', (req, res) => {
       return res.status(400).json({ ok: false, error: 'Date is required.' });
     }
 
+    // Load existing data
     const rows = readAll();
+
+    if (form_type === 'td1') {
+      console.log('[TD1]', payload);
+      payload._form = 'TD1';
+    } else if (form_type === 'td1nb') {
+      console.log('[TD1NB]', payload);
+      payload._form = 'TD1NB';
+    } else {
+      return res.status(400).json({ ok: false, error: `Unknown form_type: ${form_type}` });
+    }
+
     rows.push(payload);
     writeAll(rows);
 
-    res.json({ ok: true, timestamp: ts });
+    res.json({ ok: true, form: payload._form, timestamp: ts });
   } catch (e) {
     console.error(e);
     res.status(500).json({ ok: false, error: 'Server error' });
   }
 });
+
 
 // Simple admin-key gate
 function requireAdmin(req, res, next) {
