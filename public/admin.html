@@ -70,7 +70,6 @@ rows.forEach((r,i)=>{
 
   html += '</tbody></table></div>';
   container.innerHTML = html;
-}
 
 // Wire delete buttons
 container.querySelectorAll('button.del').forEach(btn => {
@@ -98,6 +97,9 @@ container.querySelectorAll('button.del').forEach(btn => {
     }
   });
 });
+}
+
+
 
 function applyFilter(){
   const want = document.getElementById('formFilter').value;
