@@ -47,26 +47,57 @@ function renderRows(rows){
   }
 
   let html = '<div style="overflow:auto"><table><thead><tr>'+
-    '<th>#</th><th>Timestamp</th><th>Form</th><th>Employee</th><th>Totals</th><th>Flags</th><th>All Fields (JSON)</th></tr></thead><tbody>';
-  rows.forEach((r,i)=>{
-    const form = r._form || r.form_type || '(unknown)';
-    html += '<tr>'+
-      `<td>${i+1}</td>`+
-      `<td>${escapeHTML(r._timestamp)}</td>`+
-      `<td>${escapeHTML(form)}</td>`+   <!-- NEW column -->
-      `<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
-      `<td>Total Claim Amount: <strong>${escapeHTML(r.line13||r.l12||'')}</strong></td>`+
-      `<td>`+
-        (r.multiple_employers?'<div>Multiple employers</div>':'')+
-        (r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
-        (r.nonresident_90==='no'?'<div>Non-resident &lt;90%</div>':'')+
-      `</td>`+
-      `<td><pre style="white-space:pre-wrap; max-width:520px;">${escapeHTML(JSON.stringify(r, null, 2))}</pre></td>`+
-      '</tr>';
-  });
+    '<th>#</th><th>Timestamp</th><th>Form</th><th>Employee</th><th>Totals</th><th>Flags</th><th>Actions</th><th>All Fields (JSON)</th></tr></thead><tbody>';
+rows.forEach((r,i)=>{
+  const form = r._form || r.form_type || '(unknown)';
+  html += '<tr>'+
+    `<td>${i+1}</td>`+
+    `<td>${escapeHTML(r._timestamp)}</td>`+
+    `<td>${escapeHTML(form)}</td>`+
+    `<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
+    `<td>Line 13: <strong>${escapeHTML(r.line13||r.l12||'')}</strong></td>`+
+    `<td>`+
+      (r.multiple_employers?'<div>Multiple employers</div>':'')+
+      (r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
+      (r.nonresident_90==='no'?'<div>Non-resident &lt;90%</div>':'')+
+    `</td>`+
+    // NEW: Actions column with delete button
+    `<td><button type="button" class="secondary del" data-id="${escapeHTML(r._id||'')}">Delete</button></td>`+
+    `<td><pre style="white-space:pre-wrap; max-width:520px;">${escapeHTML(JSON.stringify(r, null, 2))}</pre></td>`+
+  '</tr>';
+});
+
+
   html += '</tbody></table></div>';
   container.innerHTML = html;
 }
+
+// Wire delete buttons
+container.querySelectorAll('button.del').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    const id = e.currentTarget.getAttribute('data-id');
+    const key = document.getElementById('adminkey').value.trim();
+    if (!id) return alert('Missing ID on row');
+    if (!key) return alert('Enter admin key first');
+    if (!confirm('Delete this submission? This cannot be undone.')) return;
+
+    try {
+      const res = await fetch('/admin/submissions/' + encodeURIComponent(id), {
+        method: 'DELETE',
+        headers: { 'x-admin-key': key }
+      });
+      const j = await res.json();
+      if (!j.ok) throw new Error(j.error || 'Delete failed');
+
+      // Remove from local list and re-render with current filter
+      allRows = allRows.filter(r => r._id !== id);
+      applyFilter();
+      document.getElementById('status').textContent = 'Deleted 1 submission. Remaining: ' + allRows.length;
+    } catch (err) {
+      document.getElementById('status').textContent = 'Error: ' + err.message;
+    }
+  });
+});
 
 function applyFilter(){
   const want = document.getElementById('formFilter').value;
