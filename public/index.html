@@ -1,0 +1,80 @@
+<!doctype html>
+<label>For non-residents only: Will 90% or more of your world income be included in determining your taxable income earned in Canada in 2025?</label>
+<div class="radio"><input type="radio" name="nonresident_90" value="yes" checked /> <span>Yes</span></div>
+<div class="radio"><input type="radio" name="nonresident_90" value="no" /> <span>No (Enter “0” on line 13 and do not fill lines 2–12.)</span></div>
+</div>
+
+
+<div class="field">
+<label>Deduction for living in a prescribed zone (optional helper)</label>
+<div class="grid">
+<div class="col-4 field">
+<label>Days in a prescribed northern zone (x $11)</label>
+<input type="number" id="northern_days_11" name="northern_days_11" min="0" step="1" />
+</div>
+<div class="col-4 field">
+<label>Days in a dwelling you maintain in prescribed northern zone (x $22)</label>
+<input type="number" id="northern_days_22" name="northern_days_22" min="0" step="1" />
+</div>
+<div class="col-4 field">
+<div class="checkbox" style="margin-top:28px;">
+<input type="checkbox" id="intermediate_zone" name="intermediate_zone" />
+<label for="intermediate_zone">Intermediate zone (50% of above)</label>
+</div>
+</div>
+</div>
+<div class="hint">Calculated amount (informational): $<span id="northern_calc">0.00</span></div>
+</div>
+
+
+<div class="field">
+<label>Additional tax to be deducted (per pay period)</label>
+<input type="number" name="additional_tax" step="0.01" />
+</div>
+
+
+<div class="hint">For other reductions in tax at source (RRSP, childcare, etc.), request a CRA letter of authority (Form T1213) and provide it to your employer.</div>
+</section>
+
+
+<hr/>
+
+
+<section>
+<div class="checkbox">
+<input type="checkbox" id="certify" name="certify" required />
+<label for="certify"><strong>I certify that the information given on this form is correct and complete.</strong></label>
+</div>
+
+
+<div class="signature">
+<div class="grid">
+<div class="col-8 field">
+<label>Signature</label>
+<input type="text" name="signature" placeholder="Type your full name" required />
+</div>
+<div class="col-4 field">
+<label>Date</label>
+<input type="date" name="signature_date" required />
+</div>
+</div>
+<div class="small">It is a serious offence to make a false return.</div>
+</div>
+</section>
+
+
+<hr/>
+
+
+<div style="display:flex; gap:10px;">
+<button class="primary" type="submit">Submit TD1</button>
+<button class="secondary" type="reset">Reset</button>
+</div>
+</form>
+</main>
+<footer>TD1 2025 (Unofficial fillable replica). This tool stores submissions locally on your server.</footer>
+
+
+<script src="/td1.js"></script>
+</body>
+</html>

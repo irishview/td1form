@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TD1 Admin — Submissions</title>
+<link rel="stylesheet" href="/style.css" />
+<style>
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
+th { background: #f6f6f6; text-align: left; }
+.controls { display:flex; gap:8px; margin: 12px 0; }
+</style>
+</head>
+<body>
+<header>
+<h1>TD1 — Admin</h1>
+<div class="small">Provide your admin key to view/download submissions.</div>
+</header>
+<main>
+<div class="controls">
+<input type="password" id="adminkey" placeholder="Admin key" />
+<button class="primary" id="load">Load Submissions</button>
+<a class="secondary" id="dl" href="#">Download CSV</a>
+</div>
+<div id="status" class="small"></div>
+<div id="results"></div>
+</main>
+
+
+<script>
+function escapeHTML(s){ return s?.toString().replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])) }
+
+
+document.getElementById('load').addEventListener('click', async ()=>{
+const key = document.getElementById('adminkey').value.trim();
+const status = document.getElementById('status');
+status.textContent = 'Loading…';
+try {
+const res = await fetch('/admin/data?key=' + encodeURIComponent(key));
+const j = await res.json();
+if (!j.ok) throw new Error(j.error || 'Error');
+
+
+const rows = j.rows;
+const container = document.getElementById('results');
+if (!rows.length){ container.innerHTML = '<p>No submissions yet.</p>'; status.textContent = ''; return; }
+
+
+let html = '<div style="overflow:auto"><table><thead><tr>'+
+'<th>#</th><th>Timestamp</th><th>Employee</th><th>Totals</th><th>Flags</th><th>All Fields (JSON)</th></tr></thead><tbody>';
+rows.forEach((r,i)=>{
+html += '<tr>'+
+`<td>${i+1}</td>`+
+`<td>${escapeHTML(r._timestamp)}</td>`+
+`<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
+`<td>Line 13: <strong>${escapeHTML(r.line13||'')}</strong></td>`+
+`<td>`+
+(r.multiple_employers?'<div>Multiple employers</div>':'')+
+(r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
+(r.nonresident_90==='no'?'<div>Non-resident &lt;90%</div>':'')+
+`</td>`+
+`<td><pre style="white-space:pre-wrap; max-width:520px;">${escapeHTML(JSON.stringify(r, null, 2))}</pre></td>`+
+'</tr>';
+});
+html += '</tbody></table></div>';
+container.innerHTML = html;
+status.textContent = 'Loaded ' + rows.length + ' submission(s).';
+
+
+const dl = document.getElementById('dl');
+dl.href = '/admin/csv?key=' + encodeURIComponent(key);
+} catch (e) {
+status.textContent = 'Error: ' + e.message;
+}
+});
+</script>
+</body>
+</html>
