@@ -9,7 +9,7 @@
 table { width: 100%; border-collapse: collapse; }
 th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
 th { background: #f6f6f6; text-align: left; }
-.controls { display:flex; gap:8px; margin: 12px 0; }
+.controls { display:flex; gap:8px; margin: 12px 0; flex-wrap: wrap; }
 </style>
 </head>
 <body>
@@ -19,61 +19,82 @@ th { background: #f6f6f6; text-align: left; }
 </header>
 <main>
 <div class="controls">
-<input type="password" id="adminkey" placeholder="Admin key" />
-<button class="primary" id="load">Load Submissions</button>
-<a class="secondary" id="dl" href="#">Download CSV</a>
+  <input type="password" id="adminkey" placeholder="Admin key" />
+  <button class="primary" id="load">Load Submissions</button>
+  <a class="secondary" id="dl" href="#">Download CSV</a>
+  <!-- NEW: filter dropdown -->
+  <label for="formFilter" class="small" style="align-self:center;">Form:</label>
+  <select id="formFilter">
+    <option value="all">All</option>
+    <option value="TD1">TD1</option>
+    <option value="TD1NB">TD1NB</option>
+  </select>
 </div>
 <div id="status" class="small"></div>
 <div id="results"></div>
 </main>
 
-
 <script>
 function escapeHTML(s){ return s?.toString().replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])) }
 
+let allRows = [];
+
+function renderRows(rows){
+  const container = document.getElementById('results');
+  if (!rows.length){
+    container.innerHTML = '<p>No submissions yet.</p>';
+    return;
+  }
+
+  let html = '<div style="overflow:auto"><table><thead><tr>'+
+    '<th>#</th><th>Timestamp</th><th>Form</th><th>Employee</th><th>Totals</th><th>Flags</th><th>All Fields (JSON)</th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const form = r._form || r.form_type || '(unknown)';
+    html += '<tr>'+
+      `<td>${i+1}</td>`+
+      `<td>${escapeHTML(r._timestamp)}</td>`+
+      `<td>${escapeHTML(form)}</td>`+   <!-- NEW column -->
+      `<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
+      `<td>Line 13: <strong>${escapeHTML(r.line13||r.l12||'')}</strong></td>`+
+      `<td>`+
+        (r.multiple_employers?'<div>Multiple employers</div>':'')+
+        (r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
+        (r.nonresident_90==='no'?'<div>Non-resident &lt;90%</div>':'')+
+      `</td>`+
+      `<td><pre style="white-space:pre-wrap; max-width:520px;">${escapeHTML(JSON.stringify(r, null, 2))}</pre></td>`+
+      '</tr>';
+  });
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function applyFilter(){
+  const want = document.getElementById('formFilter').value;
+  const filtered = (want === 'all') ? allRows : allRows.filter(r => (r._form||r.form_type) === want);
+  renderRows(filtered);
+}
 
 document.getElementById('load').addEventListener('click', async ()=>{
-const key = document.getElementById('adminkey').value.trim();
-const status = document.getElementById('status');
-status.textContent = 'Loading…';
-try {
-const res = await fetch('/admin/data?key=' + encodeURIComponent(key));
-const j = await res.json();
-if (!j.ok) throw new Error(j.error || 'Error');
+  const key = document.getElementById('adminkey').value.trim();
+  const status = document.getElementById('status');
+  status.textContent = 'Loading…';
+  try {
+    const res = await fetch('/admin/data?key=' + encodeURIComponent(key));
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || 'Error');
 
+    allRows = j.rows || [];
+    applyFilter(); // render with current filter
+    status.textContent = 'Loaded ' + allRows.length + ' submission(s).';
 
-const rows = j.rows;
-const container = document.getElementById('results');
-if (!rows.length){ container.innerHTML = '<p>No submissions yet.</p>'; status.textContent = ''; return; }
-
-
-let html = '<div style="overflow:auto"><table><thead><tr>'+
-'<th>#</th><th>Timestamp</th><th>Employee</th><th>Totals</th><th>Flags</th><th>All Fields (JSON)</th></tr></thead><tbody>';
-rows.forEach((r,i)=>{
-html += '<tr>'+
-`<td>${i+1}</td>`+
-`<td>${escapeHTML(r._timestamp)}</td>`+
-`<td>${escapeHTML(r.first_name||'')} ${escapeHTML(r.last_name||'')}<br/><span class="small">SIN: ${escapeHTML(r.sin||'')}</span></td>`+
-`<td>Line 13: <strong>${escapeHTML(r.line13||'')}</strong></td>`+
-`<td>`+
-(r.multiple_employers?'<div>Multiple employers</div>':'')+
-(r.total_income_less?'<div>Income &lt; claim amount</div>':'')+
-(r.nonresident_90==='no'?'<div>Non-resident &lt;90%</div>':'')+
-`</td>`+
-`<td><pre style="white-space:pre-wrap; max-width:520px;">${escapeHTML(JSON.stringify(r, null, 2))}</pre></td>`+
-'</tr>';
+    const dl = document.getElementById('dl');
+    dl.href = '/admin/csv?key=' + encodeURIComponent(key);
+  } catch (e) {
+    status.textContent = 'Error: ' + e.message;
+  }
 });
-html += '</tbody></table></div>';
-container.innerHTML = html;
-status.textContent = 'Loaded ' + rows.length + ' submission(s).';
 
-
-const dl = document.getElementById('dl');
-dl.href = '/admin/csv?key=' + encodeURIComponent(key);
-} catch (e) {
-status.textContent = 'Error: ' + e.message;
-}
-});
+document.getElementById('formFilter').addEventListener('change', applyFilter);
 </script>
 </body>
 </html>
